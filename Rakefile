@@ -13,6 +13,7 @@ Spec::Rake::SpecTask.new do |t|
   ]
   t.spec_files = FileList['spec/**/*_spec.rb']
   t.rcov = true
+  t.rcov_opts = [ '--exclude', 'lib/spec,bin/spec,spec/,gems' ]
 end
 
 RCov::VerifyTask.new(:verify_rcov => :spec) do |t|
