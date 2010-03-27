@@ -8,6 +8,26 @@ describe Nagiru::Output::NagiosFormatter do
       @formatter = Nagiru::Output::NagiosFormatter.new
     end
 
+    it "should output 'define contact {' at the start" do
+      output = @formatter.contact(@contact)
+      # FIXME: This should have a custom rspec matcher for "match":
+      #        first_line.should match(/^define\s+contact\s+\{/)
+      first_line = output.strip.split(/\n/)[0]
+      if (first_line !~ /^\s*define\s+contact\s*\{\s*$/)
+        raise "Output should start with 'define contact {'"
+      end
+    end
+
+    it "should output '}' at the end" do
+      output = @formatter.contact(@contact)
+      # FIXME: This should have a custom rspec matcher for "match":
+      #        last_line.should match(/^\s*\}\s*$/)
+      last_line = output.strip.split(/\n/)[-1]
+      if (last_line !~ /^\s*\}\s*$/)
+        raise "Output should end with '}'"
+      end
+    end
+
     it "should output the email address" do
       output = @formatter.contact(@contact)
       # FIXME: This should have a custom rspec matcher for "match":
@@ -26,7 +46,7 @@ describe Nagiru::Output::NagiosFormatter do
       end
     end
 
-    it "should output in a way that can be loaded back to a contact object" do
+    it "should output in a foramt that can be loaded back into a contact object" do
       output = Nagiru::Nagios::Contact.new(@formatter.contact(@contact))
       output.name.should eql(@contact.name)
       output.email_address.should eql(@contact.email_address)
