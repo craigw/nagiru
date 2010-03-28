@@ -13,6 +13,14 @@ module Nagiru
         output << "  email        #{contact.email_address}\n" +
         output << "}"
       end
+
+      def host(host)
+        output << "define host {\n"
+        output << "  host_name #{host.name}\n"
+        output << "  address   #{host.address}\n"
+        output << "  alias     #{host.alias}\n"
+        output << "}"
+      end
     end
   end
 end
