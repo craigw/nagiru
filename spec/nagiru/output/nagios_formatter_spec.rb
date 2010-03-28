@@ -112,7 +112,7 @@ describe Nagiru::Output::NagiosFormatter do
     it "should output the alias" do
       @formatter.host(@host)
       # FIXME: This should have a custom rspec matcher for "match":
-      #        output.should match(/host\_name\s+ducky/)
+      #        output.should match(/alias\s+Server Ducky/)
       if (@formatter.output !~ /alias\s+Server Ducky/)
         raise "Output should contain the alias"
       end
