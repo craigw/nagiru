@@ -82,7 +82,7 @@ describe Nagiru::Nagios::Contact do
         @string << "}\n"
       end
 
-      it "should return a collection containing the correct number contacts" do
+      it "should return a collection containing the correct number of contacts" do
         contacts = Nagiru::Nagios::Contact.parse(@string)
         contacts.should have(3).contacts
         contacts.each do |contact|
@@ -132,7 +132,7 @@ describe Nagiru::Nagios::Contact do
         @string << "}\n"
       end
 
-      it "should return a collection containing the correct number contacts" do
+      it "should return a collection containing the correct number of contacts" do
         contacts = Nagiru::Nagios::Contact.parse(@string)
         contacts.should have(2).contacts
         contacts.each do |contact|
