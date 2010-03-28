@@ -1,11 +1,17 @@
 module Nagiru
   module Output
     class NagiosFormatter
+      attr_accessor :output
+
+      def initialize(output = nil)
+        self.output = output || STDOUT
+      end
+
       def contact(contact)
-        "define contact {\n" +
-        "  contact_name #{contact.name}\n" +
-        "  email        #{contact.email_address}\n" +
-        "}"
+        output << "define contact {\n" +
+        output << "  contact_name #{contact.name}\n" +
+        output << "  email        #{contact.email_address}\n" +
+        output << "}"
       end
     end
   end
