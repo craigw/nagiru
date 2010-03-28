@@ -46,10 +46,10 @@ describe Nagiru::Output::NagiosFormatter do
       end
     end
 
-    it "should output in a foramt that can be loaded back into a contact object" do
-      output = Nagiru::Nagios::Contact.new(@formatter.contact(@contact))
-      output.name.should eql(@contact.name)
-      output.email_address.should eql(@contact.email_address)
+    it "should output in a format that can be parsed back into a contact object" do
+      output = Nagiru::Nagios::Contact.parse(@formatter.contact(@contact))
+      output[0].name.should eql(@contact.name)
+      output[0].email_address.should eql(@contact.email_address)
     end
   end
 end
