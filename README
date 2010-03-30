@@ -1,0 +1,69 @@
+Nagiru
+======
+
+Nagios configuration using Ruby - NAGios In RUby
+
+
+Examples
+--------
+
+  # Create a profile for a LAMP example configuration
+  nagiru profile create --name lamp-example
+
+  # Add a contact, the sysadmin, who receives email at ops@example.com
+  nagiru contact add --name sysadmin --email "ops@example.com"
+
+  # Add a host, the server that we're looking after
+  nagiru host add --name lamp --address 192.168.0.1 --contact sysadmin
+
+  # Check that the host is responding to ICMP type 8 requests (PING ECHO) - a
+  # fairly basic check to see if the host is up and able to respond. Some hosts
+  # block ping. Your Nagios server should be allowed to ping your hosts.
+  nagiru service add --host lamp --name PING --contact sysadmin --check ping
+
+  # Add a service, HTTP, that we want to run on our host
+  nagiru service add --host lamp --name HTTP --contact sysadmin --check http
+
+  # Check that HTTP requests for www.example.com are redirected (with a 301 Moved
+  # Permanently status) to example.com within 1 second of the request being sent.
+  nagiru service add --host lamp --name HTTP --contact sysadmin \
+                     --check "http:www.example.com:301:example.com:1s"
+
+  # Check that HTTP requests for example.com are served (with a 200 OK status)
+  # within 1 second of the request being sent.
+  nagiru service add --host lamp --name HTTP --contact sysadmin \
+                     --check "http:example.com:200:1s"
+
+  # Check that MySQL is listening
+  nagiru service add --host lamp --name MySQL --contact sysadmin --check mysql
+
+  # Check that example.com points to this server
+  nagiru service add --host lamp --name DNS --contact sysadmin \
+                     --check dns:example.com
+
+  # Check that www.example.com points to this server
+  nagiru service add --host lamp --name DNS --contact sysadmin \
+                     --check dns:www.example.com
+
+  # Export the profile so we can use it for Nagios
+  nagiru profile export --name lamp-example --destination file:./nagios.cfg
+
+nagios.cfg can be copied to your Nagios server and used as configuration.
+
+It's possible to import existing Nagios configurations too, just do this:
+
+  nagiru profile import --name name-for-your-profile \
+                        --source file:/path/to/nagios.cfg
+
+
+Authors
+-------
+
+Craig R Webster <http://barkingiguana.com/>
+
+Licence
+-------
+
+Copyright (C) 2010 Craig R Webster <http://barkingiguana.com/>.
+Released under the MIT licence. For the full text of the licence see:
+  http://www.opensource.org/licenses/mit-license.php
